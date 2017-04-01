@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>lidicator</title>
+   <script>
+   "use strict";
+
+      var black = true;
+      var blackback = true;
+      var bgColor = "black";
+		var alarmColor = "#58002C";
+      var counter = 0;
+      var blinkOn, blinkBackOn;
+      var count;
+
+      function init() {
+         lightitup(true);
+         getCount();
+      }
+      function getID(id) {return document.getElementById(id);}
+      function lightitup(start) {
+         if (!start)
+            increment();
+         if (counter)
+            blinkback();
+         else
+            blink();
+         counter++;
+      }
+      function blink() {
+         if (black) {
+				getID("point").style.color = "#58002C";
+				black = false;
+			}
+			else {
+				getID("point").style.color = "black";
+				black = true;
+			}
+			blinkOn = setTimeout("blink()",200);
+		}
+      function blinkback() {
+         if (black) {
+				getID("body").style.backgroundColor = "#58002C";
+				blackback = false;
+			}
+			else {
+				getID("body").style.backgroundColor = "black";
+				blackback = true;
+			}
+			blinkBackOn = setTimeout("blinkback()",500);
+		}
+      function getCount() {
+         var req = new XMLHttpRequest();
+         var url = "getcount.php";
+         req.onreadystatechange=function() {
+            if (req.readyState==4 && req.status==200) {
+               count = JSON.parse(req.responseText)["counter"];
+               console.log("count: " + count); 
+               getID("constant").innerHTML = "Days Constant: " + count;
+               //lightitup();
+            }
+         };
+         req.open("GET", url, true);
+         req.send();
+      }
+      function increment() {
+         var req = new XMLHttpRequest();
+         var url = "increment.php?increment=true";
+         req.onreadystatechange=function() {
+            if (req.readyState==4 && req.status==200 && req.responseText == "success") {
+               getCount();
+            }
+         };
+         req.open("GET", url, true);
+         req.send();
+      }
+      
+      
+   </script>
+   <style>
+      body {background-color:black;color:#009bd5;font-family:arial;font-size:14}
+      a {color:#009bd5;text-decoration:none}
+      a:hover {color:white}
+      input {background-color:black;color:white;font-family:arial;font-size:14}
+      #light {position:fixed;top:100px;left:100px;font-size:72px}
+      #dark {position:fixed;top:200px;left:175px;font-size:72px}
+      #point {position:fixed;top:135px;left:270px;font-size:96px}
+   </style>
+</head>
+<body id="body" onload="init()">
+   <a id="light" href="javascript:somefunction()">DevOps Status</a></br>
+   <a id="dark" href="javascript:somefunction()">Indicator</a>
+   <a id="point" href="javascript:lightitup()">.</a>
+   <a id="constant" href="javascript:somefunction()"></a>
+</body>
+</html>
