@@ -1,0 +1,37 @@
+body {
+  background-color:black;
+  color:#009bd5;
+  font-family:arial;
+  font-size:14
+}
+a {
+  color:#009bd5;
+  text-decoration:none
+}
+a:hover {
+  color:white
+}
+input {
+  background-color:black;
+  color:white;
+  font-family:arial;
+  font-size:14
+}
+#light {
+  position:fixed;
+  top:100px;
+  left:100px;
+  font-size:72px
+}
+#dark {
+  position:fixed;
+  top:200px;
+  left:175px;
+  font-size:72px
+}
+#point {
+  position:fixed;
+  top:135px;
+  left:270px;
+  font-size:96px
+}
