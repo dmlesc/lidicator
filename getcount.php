@@ -1,3 +1,3 @@
 <?php
-   echo file_get_contents("counter");
+  echo file_get_contents("counter");
 ?>
